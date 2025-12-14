@@ -11,6 +11,9 @@
   --text-secondary: #4a4a4a;
   --text-muted: #6b7280;
   --border-color: #e5e5e5;
+  --tech-bg: #fafafa;
+  --tech-border: #e5e5e5;
+  --tech-shadow: rgba(0,0,0,0.06);
   --name-color: #1a1a1a;
   --title-color: #666;
   --nav-bg: rgba(255, 255, 255, 0.75);
@@ -24,6 +27,9 @@
   --text-secondary: #b0b0b0;
   --text-muted: #888;
   --border-color: #333;
+  --tech-bg: #151515;
+  --tech-border: #2f2f2f;
+  --tech-shadow: rgba(0,0,0,0.55);
   --name-color: #ffffff;
   --title-color: #b0b0b0;
   --nav-bg: rgba(20, 20, 20, 0.75);
@@ -80,7 +86,7 @@ body {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-right: 10px;
+  margin-right: 0px;
 }
 
 .name {
@@ -148,21 +154,24 @@ body {
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.75);
+  /* glassy water-like background */
+  background: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0.06));
   padding: 12px 24px;
   border-radius: 30px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.10), inset 0 1px 0 rgba(255,255,255,0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   z-index: 1000;
-  backdrop-filter: blur(40px) saturate(180%);
-  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  backdrop-filter: blur(60px) saturate(180%);
+  -webkit-backdrop-filter: blur(60px) saturate(180%);
   transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 [data-theme="dark"] .navigation {
-  background: rgba(20, 20, 20, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(180deg, rgba(20,20,20,0.22), rgba(20,20,20,0.06));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255,255,255,0.02);
+  backdrop-filter: blur(60px) saturate(140%);
+  -webkit-backdrop-filter: blur(60px) saturate(140%);
 }
 
 .navigation a {
@@ -182,13 +191,21 @@ body {
 .navigation a::after {
   content: '';
   position: absolute;
-  bottom: -2px;
+  bottom: -6px;
   left: 0;
   width: 0;
-  height: 1.5px;
+  height: 2px;
   background-color: var(--name-color);
-  transition: width 0.2s ease;
+  transition: width 0.22s ease;
   border-radius: 2px;
+}
+
+.navigation a.active {
+  color: var(--name-color);
+}
+
+.navigation a.active::after {
+  width: 100%;
 }
 
 .theme-toggle {
@@ -215,6 +232,23 @@ body {
 
 .navigation a:hover::after {
   width: 100%;
+}
+
+/* Nav icons */
+.navigation .nav-icon {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.navigation .nav-icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
 }
 
 /* Section Styles */
@@ -318,9 +352,48 @@ body {
   font-weight: 300;
 }
 
+/* Education meta (calendar) */
+.education-item {
+  position: relative;
+  padding-right: 12px;
+  margin-bottom: 12px;
+}
+
+.edu-meta {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.02);
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+.edu-meta svg { width: 14px; height: 14px; display:block; }
+
+[data-theme="dark"] .edu-meta { background: rgba(255,255,255,0.02); }
+
 /* Projects Section */
 .project-item {
   margin-bottom: 28px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background-color: var(--tech-bg, rgba(250,250,250,0.6));
+  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease, border-color 0.22s ease;
+  position: relative;
+}
+
+.project-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+  border-color: var(--name-color);
 }
 
 .project-item:last-child {
@@ -341,6 +414,19 @@ body {
   color: var(--text-secondary);
   margin-bottom: 4px;
   transition: color 0.3s ease;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+/* Remove bullets/markers from project description lists */
+.project-description ul {
+  list-style: none;
+  margin: 8px 0;
+  padding-left: 0;
+}
+
+.project-description li {
+  margin: 6px 0;
+  padding-left: 0;
 }
 
 .project-tech {
@@ -348,6 +434,275 @@ body {
   color: var(--text-muted);
   font-family: 'Courier New', monospace;
   transition: color 0.3s ease;
+}
+
+/* Project card meta (date) top-right */
+.project-meta {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.03);
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.03);
+}
+
+.project-meta svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+/* GitHub link on project card bottom-right */
+.project-git {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.02);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.project-git svg {
+  width: 16px;
+  height: 16px;
+}
+
+.project-git:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+[data-theme="dark"] .project-meta {
+  background: rgba(255,255,255,0.02);
+  border-color: rgba(255,255,255,0.03);
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .project-git {
+  background: rgba(255,255,255,0.02);
+}
+
+/* Experience cards - styled like project cards */
+.experience-item {
+  margin-bottom: 20px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background-color: var(--tech-bg, rgba(250,250,250,0.6));
+  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease, border-color 0.22s ease;
+}
+
+.experience-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+  border-color: var(--name-color);
+}
+
+.experience-item:last-child {
+  margin-bottom: 0;
+}
+
+.experience-link {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Research subsection inside Experience */
+.research-section {
+  margin-top: 18px;
+}
+
+.research-section .section-subtitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--name-color);
+  margin-bottom: 10px;
+}
+
+/* Make research items render as square cards in a single row */
+.research-list {
+  display: flex;
+  gap: 12px;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+.research-item {
+  flex: 1 1 0;
+  min-width: 240px;
+  aspect-ratio: 4 / 3; /* reduced height relative to width */
+  max-height: 360px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background-color: var(--tech-bg);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+/* Hover effect for research cards */
+.research-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+  border-color: var(--name-color);
+}
+
+.research-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--name-color);
+  margin-bottom: 6px;
+}
+
+.research-details {
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  line-height: 1.45;
+  overflow: auto;
+}
+
+.research-link {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Implementation progress card inside research items */
+.implementation-card {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background-color: var(--tech-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+/* Make implementation card respond to hover like research cards */
+.implementation-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgb(36, 36, 36);
+  border-color: var(--name-color);
+}
+
+/* Achievements cards - two in a row */
+.achievements-section {
+  margin-top: 18px;
+}
+
+.achievements-list {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+
+.achievement-item {
+  flex: 1 1 0;
+  min-width: 260px;
+  aspect-ratio: 4 / 3;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background-color: var(--tech-bg);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.achievement-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+  border-color: var(--name-color);
+}
+
+.achievement-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--name-color);
+  margin-bottom: 6px;
+}
+
+.achievement-org {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.achievement-list {
+  list-style: disc;
+  margin-left: 16px;
+  color: var(--text-secondary);
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .achievements-list { flex-direction: column; }
+}
+
+.implementation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.impl-title {
+  font-weight: 700;
+  color: var(--name-color);
+  font-size: 0.92rem;
+}
+
+.impl-badge {
+  background: linear-gradient(90deg, #f59e0b, #f97316);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.impl-list {
+  display: grid;
+  gap: 6px;
+}
+
+.impl-list li {
+  margin-left: 14px;
+  list-style: disc;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+}
+
+[data-theme="dark"] .implementation-card {
+  background-color: rgba(255,255,255,0.02);
 }
 
 /* Skills Section */
@@ -380,44 +735,50 @@ body {
 }
 
 /* Tools and Technologies Section */
+
 .tech-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 12px;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 10px;
 }
 
 .tech-box {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  padding: 8px 12px;
-  border: 2px dashed var(--border-color);
+  justify-content: flex-start;
+  padding: 6px 8px;
+  border: 1px dashed var(--tech-border, var(--border-color));
   border-radius: 8px;
-  background-color: transparent;
-  transition: all 0.3s ease;
+  background-color: var(--tech-bg, rgb(50, 50, 50));
+  transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease, border-color 0.22s ease;
   cursor: default;
-  min-height: 40px;
-  width: 180px;
+  min-height: 36px;
+  gap: 8px;
+  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.132);
+  box-sizing: border-box; /* ADD THIS */
+  /* width: 100%; REMOVE THIS */
 }
 
+
 .tech-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
   border-color: var(--name-color);
-  background-color: var(--nav-bg);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px var(--shadow);
+  background-color: rgba(255,255,255,0.02);
 }
 
 .tech-name {
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-size: 0.72rem;
+  font-weight: 600;
   color: var(--text-secondary);
   text-align: left;
-  transition: color 0.3s ease;
-  flex: 1;
-  margin-right: 8px;
-  margin-left: 10px;
+  transition: color 0.18s ease;
+  flex: 1 1 auto;
+  margin: 0 2px 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tech-box:hover .tech-name {
@@ -429,13 +790,13 @@ body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 28px;
-  height: 28px;
+  width: 25px;
+  height: 25px;
 }
 
 .tech-icon img {
-  width: 28px;
-  height: 28px;
+  width: 18px;
+  height: 18px;
   object-fit: contain;
   transition: transform 0.3s ease;
 }
@@ -449,8 +810,9 @@ body {
 }
 
 [data-theme="dark"] .tech-box:hover {
-  background-color: rgba(30, 30, 30, 0.5);
+  background-color: rgb(40, 40, 40);
   border-color: var(--name-color);
+
 }
 
 /* Contact Section */
@@ -501,6 +863,7 @@ body {
     gap: 20px;
     padding: 10px 20px;
     border-radius: 25px;
+    
   }
 
   .navigation a {
@@ -606,7 +969,7 @@ body {
     padding: 8px 16px;
     border-radius: 20px;
     flex-wrap: wrap;
-    max-width: calc(100% - 32px);
+    max-width: calc(100% - 42px);
   }
 
   .navigation a {
@@ -653,6 +1016,24 @@ body {
 
   .tech-name {
     font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .tech-grid {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+  }
+
+  .tech-name {
+    font-size: 0.78rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .tech-grid {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 12px;
   }
 }
 

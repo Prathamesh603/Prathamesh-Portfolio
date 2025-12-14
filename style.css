@@ -702,7 +702,7 @@ body {
 }
 
 [data-theme="dark"] .implementation-card {
-  background-color: rgba(255,255,255,0.02);
+  background-color: rgb(21, 21, 21);
 }
 
 /* Skills Section */

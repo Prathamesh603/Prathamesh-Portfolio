@@ -377,6 +377,33 @@ body {
 .edu-meta svg { width: 14px; height: 14px; display:block; }
 
 [data-theme="dark"] .edu-meta { background: rgba(255,255,255,0.02); }
+/* git hub contribution chart  */
+.github-section{
+  margin-top: 30px;
+  margin-bottom: 20px;
+  
+}
+.github-heading {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* space between texts */
+  margin-left: 250px;
+  margin-bottom: 10px;
+}
+
+.github-title {
+  font-size: 1.2rem; /* reduced size */
+  font-weight: 600;
+  color: rgb(87, 87, 87);
+  margin: 0; /* IMPORTANT */
+}
+
+.reponame {
+  font-size: 1.2rem; /* reduced size */
+  font-weight: 600;
+  color: var(--name-color);
+  margin: 0; /* IMPORTANT */
+}
 
 /* Projects Section */
 .project-item {
